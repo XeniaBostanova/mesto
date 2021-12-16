@@ -1,6 +1,6 @@
 .profile__caption {
   margin: 0;
-  padding-top: 16px;
+  padding-top: 9px;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -20,7 +20,7 @@
   .profile__caption {
     font-size: 14px;
     line-height: 17px;
-    padding-top: 14px;
+    padding-top: 7px;
     text-align: center;
     max-width: 282px;
     margin: 0 auto;

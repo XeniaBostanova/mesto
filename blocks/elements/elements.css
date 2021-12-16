@@ -23,6 +23,7 @@
 
 @media screen and (max-width: 424px) {
   .elements {
+    padding-top: 36px;
     max-width: calc(100% - 38px);
     gap: 20px;
   }
