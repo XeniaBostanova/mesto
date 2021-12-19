@@ -7,6 +7,7 @@
   margin-left: auto;
   background: transparent url(../../../images/add-button.svg) no-repeat center;
   border: 2px solid #fff;
+  border-radius: 2px;
   cursor: pointer;
   transition: .5s;
 }
@@ -22,7 +23,7 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   .profile__add-button {
     width: 110px;
   }

@@ -19,11 +19,11 @@
           <div class="profile__info">
             <div class="profile__container">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <button class="profile__edit-button"></button>
+              <button type="button" class="profile__edit-button"></button>
             </div>
             <p class="profile__caption">Исследователь океана</p>
           </div>
-          <button class="profile__add-button"></button>
+          <button type="button" class="profile__add-button"></button>
         </section>
 
         <section class="elements">
@@ -31,42 +31,42 @@
             <img src="./images/tokyo.jpg" alt="Токио" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Токио</h2>
-              <button class="element__like-button element__like-button_type_active"></button>
+              <button type="button" class="element__like-button element__like-button_active"></button>
             </div>
           </div>
           <div class="element">
             <img src="./images/alberta.jpg" alt="Альберта" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Альберта</h2>
-              <button class="element__like-button"></button>
+              <button type="button" class="element__like-button"></button>
             </div>
           </div>
           <div class="element">
             <img src="./images/vankuver.jpg" alt="Ванкувер" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Ванкувер</h2>
-              <button class="element__like-button"></button>
+              <button type="button" class="element__like-button"></button>
             </div>
           </div>
           <div class="element">
             <img src="./images/elbrus.jpg" alt="Эльбрус" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like-button"></button>
+              <button type="button" class="element__like-button"></button>
             </div>
           </div>
           <div class="element">
             <img src="./images/dombai.jpg" alt="Домбай" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Домбай</h2>
-              <button class="element__like-button"></button>
+              <button type="button" class="element__like-button"></button>
             </div>
           </div>
           <div class="element">
             <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="element__item">
             <div class="element__container">
               <h2 class="element__title">Карачаевск</h2>
-              <button class="element__like-button"></button>
+              <button type="button" class="element__like-button"></button>
             </div>
           </div>
         </section>
@@ -81,16 +81,13 @@
 
     <section class="popup">
       <div class="popup__container">
-        <button class="popup__close"></button>
-        <div class="popup__info-container">
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="form">
-            <input type="text" class="form__item form__item_name" value="Жак-Ив Кусто">
-            <input type="text" class="form__item form__item_job" value="Исследователь океана">
-            <button type="submit" class="form__button">Сохранить</button>
-          </form>
-        </div>
-
+        <button type="button" class="popup__close"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="form" name="userInformation">
+          <input type="text" name="name" class="form__item form__item_type_name" value="Жак-Ив Кусто">
+          <input type="text" name="about" class="form__item form__item_type_about" value="Исследователь океана">
+          <button type="submit" class="form__button">Сохранить</button>
+        </form>
       </div>
     </section>
 
