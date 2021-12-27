@@ -129,4 +129,5 @@ formElement.addEventListener('submit', (evt) => {
   });
 
   toggle(popupElementModal);
+  formElement.reset();
 });
