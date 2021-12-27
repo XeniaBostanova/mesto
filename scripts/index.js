@@ -1,36 +1,132 @@
-const popupOpenButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close');
-const popup = document.querySelector('.popup');
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
-let formElement = document.querySelector('.form');
-let nameInput = formElement.querySelector('.form__item_type_name');
-let jobInput = formElement.querySelector('.form__item_type_about');
+//Модалки
+const popupProfileModal = document.querySelector('.popup_type_edit');
+const popupElementModal = document.querySelector('.popup_type_add');
+const popupImageModal = document.querySelector('.popup_type_image');
 
-let profileTitle = document.querySelector('.profile__title');
-let profileCaption = document.querySelector('.profile__caption');
+//Кнопки
+const popupProfileOpenButton = document.querySelector('.profile__edit-button');
+const popupProfileCloseButton = popupProfileModal.querySelector('.popup__close');
 
-function openPopup() {
-  popup.classList.add('popup_opened');
+const popupElementOpenButton = document.querySelector('.profile__add-button');
+const popupElementCloseButton = popupElementModal.querySelector('.popup__close');
+
+const popupImageCloseButton = popupImageModal.querySelector('.popup__close');
+
+//Формы
+const formProfile = popupProfileModal.querySelector('.form');
+const formElement = popupElementModal.querySelector('.form');
+
+//Инпуты
+const nameInput = formProfile.querySelector('.form__item_type_name');
+const jobInput = formProfile.querySelector('.form__item_type_about');
+
+const titleInput = formElement.querySelector('.form__item_type_title');
+const linkInput = formElement.querySelector('.form__item_type_link');
+
+//Профайл
+const profileTitle = document.querySelector('.profile__title');
+const profileCaption = document.querySelector('.profile__caption');
+
+//Темплэйты
+const elementsList = document.querySelector('.elements');
+const elementTemplate = document.querySelector('.element-template').content;
+
+//Картинка попап
+const popupImageItem = popupImageModal.querySelector('.popup__image-item');
+const popupImageCaption = popupImageModal.querySelector('.popup__image-caption');
+
+function deleteHandler(evt) {
+  evt.target.closest('.element').remove();
+};
+
+function createElement (elementData) {
+  const elementCard = elementTemplate.cloneNode(true);
+  const elementItem = elementCard.querySelector('.element__item');
+  const elementTitle = elementCard.querySelector('.element__title');
+  const deleteButton = elementCard.querySelector('.element__delete-button');
+  const likeButton = elementCard.querySelector('.element__like-button');
+
+  elementTitle.textContent = elementData.name;
+  elementItem.src = elementData.link;
+  elementItem.alt = elementData.name;
+
+  elementsList.prepend(elementCard);
+
+  likeButton.addEventListener('click', () => likeButton.classList.toggle('element__like-button_active'));
+  deleteButton.addEventListener('click', deleteHandler);
+
+  function createPopupImage () {
+    popupImageItem.src = elementData.link;
+    popupImageItem.alt = elementData.name;
+    popupImageCaption.textContent = elementData.name;
+
+    toggle(popupImageModal);
+  };
+
+  elementItem.addEventListener('click', createPopupImage);
+};
+
+initialCards.forEach(createElement);
+
+function toggle(modal) {
+  modal.classList.toggle('popup_opened');
+};
+
+popupProfileOpenButton.addEventListener('click', () => {
+  toggle(popupProfileModal);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileCaption.textContent;
-}
+});
+popupProfileCloseButton.addEventListener('click', () => toggle(popupProfileModal));
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
-}
+popupElementOpenButton.addEventListener('click', () => toggle(popupElementModal));
+popupElementCloseButton.addEventListener('click', () => toggle(popupElementModal));
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+popupImageCloseButton.addEventListener('click', () => toggle(popupImageModal));
 
-    profileTitle.textContent = nameInput.value;
-    profileCaption.textContent = jobInput.value;
+formProfile.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-    closePopup()
-}
+  profileTitle.textContent = nameInput.value;
+  profileCaption.textContent = jobInput.value;
 
-popupOpenButton.addEventListener('click', openPopup);
-popupCloseButton.addEventListener('click', closePopup);
+  toggle(popupProfileModal);
+});
 
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  createElement({
+    name: titleInput.value,
+    link: linkInput.value
+  });
+
+  toggle(popupElementModal);
+});
