@@ -16,5 +16,5 @@
   -moz-transition: visibility .5s, opacity .5s linear;
   -ms-transition: visibility .5s, opacity .5s linear;
   -o-transition: visibility .5s, opacity .5s linear;
-
+  z-index: 2;
 }
