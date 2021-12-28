@@ -77,8 +77,6 @@ function createElement (elementData) {
   elementItem.src = elementData.link;
   elementItem.alt = elementData.name;
 
-  elementsList.prepend(elementCard);
-
   likeButton.addEventListener('click', () => likeButton.classList.toggle('element__like-button_active'));
   deleteButton.addEventListener('click', deleteHandler);
 
@@ -91,9 +89,16 @@ function createElement (elementData) {
   };
 
   elementItem.addEventListener('click', createPopupImage);
+
+  return elementCard;
 };
 
-initialCards.forEach(createElement);
+function renderCard (elementCard) {
+  const newElement = createElement(elementCard);
+  elementsList.prepend(newElement);
+}
+
+initialCards.forEach(renderCard);
 
 function toggle(modal) {
   modal.classList.toggle('popup_opened');
@@ -123,7 +128,7 @@ formProfile.addEventListener('submit', (evt) => {
 formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  createElement({
+  renderCard({
     name: titleInput.value,
     link: linkInput.value
   });

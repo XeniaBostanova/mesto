@@ -3,4 +3,10 @@
   height: 282px;
   object-fit: cover;
   object-position: center;
+  cursor: pointer;
+  transition: transform .5s;
+}
+
+.element__item:hover {
+  transform: scale(1.1);
 }
