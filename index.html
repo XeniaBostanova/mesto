@@ -42,9 +42,11 @@
         <button type="button" class="popup__close"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="form" name="userInformation">
-          <input type="text" name="name" class="form__item form__item_type_name" placeholder="Имя">
-          <input type="text" name="about" class="form__item form__item_type_about" placeholder="Описание">
-          <button type="submit" class="form__button">Сохранить</button>
+          <input id="name-input" type="text" name="name" class="form__item form__item_type_name" placeholder="Имя" minlength="2" maxlength="40" required>
+          <span class="form__input-error name-input-error"></span>
+          <input id="about-input" type="text" name="about" class="form__item form__item_type_about" placeholder="О себе" minlength="2" maxlength="200" required>
+          <span class="form__input-error about-input-error"></span>
+          <button type="submit" class="form__button form__button_type_edit">Сохранить</button>
         </form>
       </div>
     </div>
@@ -54,9 +56,11 @@
         <button type="button" class="popup__close"></button>
         <h2 class="popup__title">Новое место</h2>
         <form class="form" name="addImage">
-          <input type="text" name="title" class="form__item form__item_type_title" placeholder="Название">
-          <input type="text" name="link" class="form__item form__item_type_link" placeholder="Ссылка на картинку">
-          <button type="submit" class="form__button">Сохранить</button>
+          <input id="title-input" type="text" name="title" class="form__item form__item_type_title" placeholder="Название" minlength="2" maxlength="30" required>
+          <span class="form__input-error title-input-error"></span>
+          <input id="link-input" type="url" name="link" class="form__item form__item_type_link" placeholder="Ссылка на картинку" required>
+          <span class="form__input-error link-input-error"></span>
+          <button type="submit" class="form__button form__button_type_add">Создать</button>
         </form>
       </div>
     </div>
@@ -81,6 +85,7 @@
     </template>
     <script src="./scripts/cards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 
   </body>
   </html>
