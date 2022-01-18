@@ -15,7 +15,6 @@ const popupElementCloseButton = popupElementModal.querySelector('.popup__close')
 
 const popupImageCloseButton = popupImageModal.querySelector('.popup__close');
 
-const submitButton = document.querySelector('.form__button');
 const editSubmitButton = popupProfileModal.querySelector('.form__button_type_edit');
 const addSubmitButton = popupElementModal.querySelector('.form__button_type_add');
 
@@ -69,7 +68,7 @@ function createElement (elementData) {
     popupImageItem.alt = elementData.name;
     popupImageCaption.textContent = elementData.name;
 
-    toggle(popupImageModal);
+    openPopup(popupImageModal);
   }
 
   elementItem.addEventListener('click', createPopupImage);
@@ -78,28 +77,32 @@ function createElement (elementData) {
 }
 
 //Функция вставки карточки на страницу
-function renderCard(elementCard) {
-  const newElement = createElement(elementCard);
+function renderCard(elemCard) {
+  const newElement = createElement(elemCard);
   elementsList.prepend(newElement);
 }
 
 //Создаем карточки из массива
 initialCards.forEach(renderCard);
 
-//Функция открытия/закрытия попапа
-function toggle(modal) {
-  modal.classList.toggle('popup_opened');
+//Открытие попапа
+function openPopup(modal) {
+  modal.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupOnEsc);
-  deleteActiveSpans();
-  deleteInputErrorStyle();
-  formElement.reset();
+}
+
+//Закрытие попапа
+function closePopup(modal) {
+  modal.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupOnEsc);
 }
 
 //Закрытие попапов на оверлей
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
-      toggle(popup);
+      closePopup(popup);
+      resetValidation();
     }
   });
 })
@@ -108,19 +111,20 @@ popups.forEach((popup) => {
 function closePopupOnEsc(evt) {
     if (evt.key === 'Escape') {
       const openedPopup = document.querySelector('.popup_opened');
-      toggle(openedPopup);
+      closePopup(openedPopup);
+      resetValidation();
   }
 }
 
 //Функция деактивации кнопки submit
-function disableSubmitButton (submitButton) {
-  submitButton.setAttribute('disabled', true);
-  submitButton.classList.add('form__button_disabled');
+function disableSubmitButton (submitButtonSelector) {
+  submitButtonSelector.setAttribute('disabled', true);
+  submitButtonSelector.classList.add(inactiveButtonClass);
 }
 
 //Функция удаления сообщений спанов после закрытия попапов с input-error
 function deleteActiveSpans () {
-  const spansActive = document.querySelectorAll('.form__input-error_active');
+  const spansActive = document.querySelectorAll(`.${errorClass}`);
   spansActive.forEach((errorSpanMessage) => {
    errorSpanMessage.textContent = '';
   });
@@ -128,30 +132,43 @@ function deleteActiveSpans () {
 
 //Функция удаления красного подчеркивания невалидных полей после закрытия попапов с input-error
 function deleteInputErrorStyle () {
-  const inputErrors = document.querySelectorAll('.form__item_type_error');
+  const inputErrors = document.querySelectorAll(`.${inputErrorClass}`);
   inputErrors.forEach((inputElement) => {
-    inputElement.classList.remove('form__item_type_error');
+    inputElement.classList.remove(inputErrorClass);
   });
+}
+
+//Функция комплексного сброса валидации инпутов
+function resetValidation () {
+  deleteInputErrorStyle();
+  deleteActiveSpans();
+  formElement.reset();
 }
 
 //Попап редактирования профиля
 popupProfileOpenButton.addEventListener('click', () => {
+  openPopup(popupProfileModal);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileCaption.textContent;
-  toggle(popupProfileModal);
   disableSubmitButton(editSubmitButton);
 });
-popupProfileCloseButton.addEventListener('click', () => toggle(popupProfileModal));
+popupProfileCloseButton.addEventListener('click', () => {
+  closePopup(popupProfileModal);
+  resetValidation();
+});
 
 //Попап добавления карточек
 popupElementOpenButton.addEventListener('click', () => {
-  toggle(popupElementModal);
+  openPopup(popupElementModal);
   disableSubmitButton(addSubmitButton);
 });
-popupElementCloseButton.addEventListener('click', () => toggle(popupElementModal));
+popupElementCloseButton.addEventListener('click', () => {
+  closePopup(popupElementModal);
+  resetValidation();
+});
 
 //Попап закрытия картинки карточки
-popupImageCloseButton.addEventListener('click', () => toggle(popupImageModal));
+popupImageCloseButton.addEventListener('click', () => closePopup(popupImageModal));
 
 //Изменение данных профиля
 formProfile.addEventListener('submit', (evt) => {
@@ -160,7 +177,8 @@ formProfile.addEventListener('submit', (evt) => {
   profileTitle.textContent = nameInput.value;
   profileCaption.textContent = jobInput.value;
 
-  toggle(popupProfileModal);
+  closePopup(popupProfileModal);
+  resetValidation();
 });
 
 //Добавление новой карточки
@@ -172,6 +190,6 @@ formElement.addEventListener('submit', (evt) => {
     link: linkInput.value
   });
 
-  toggle(popupElementModal);
-  formElement.reset();
+  closePopup(popupElementModal);
+  resetValidation();
 });
