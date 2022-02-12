@@ -1,10 +1,10 @@
 import { initialCards, selectors, popups, popupProfileModal,
 popupElementModal, popupProfileOpenButton, popupProfileCloseButton, popupElementOpenButton,
-popupElementCloseButton, editSubmitButton, addSubmitButton, formProfile, formAddCard,
-nameInput, jobInput, titleInput, linkInput, profileTitle, profileCaption, elementsList } from './constants.js';
+popupElementCloseButton, formProfile, formAddCard, nameInput, jobInput, titleInput,
+linkInput, profileTitle, profileCaption, elementsList } from './constants.js';
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
-import { openPopup, closePopup, resetValidation, disableSubmitButton } from './utils.js';
+import { openPopup, closePopup } from './utils.js';
 
 //Создаем экземпляр класса для каждой формы
 const profileFormValidator = new FormValidator(selectors, formProfile);
@@ -14,12 +14,18 @@ const addCardFormValidator = new FormValidator(selectors, formAddCard);
 profileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
-//Функция вставки карточки на страницу
-function renderCard(elemCard) {
-  const card = new Card (elemCard, '.element-template');
+//Функция создания экземпляра карточки
+function createCard(item) {
+  const card = new Card(item, '.element-template');
   const cardElement = card.generateCard();
 
-  elementsList.prepend(cardElement);
+  return cardElement;
+}
+
+//Функция вставки карточки на страницу
+function renderCard(cardItem) {
+  const elemCard = createCard(cardItem);
+  elementsList.prepend(elemCard);
 }
 
 //Создаем карточки из массива
@@ -39,21 +45,16 @@ popupProfileOpenButton.addEventListener('click', () => {
   openPopup(popupProfileModal);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileCaption.textContent;
-  disableSubmitButton(editSubmitButton);
-  resetValidation();
+  profileFormValidator.resetValidation();
 });
 popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfileModal));
 
 //Попап добавления карточек
 popupElementOpenButton.addEventListener('click', () => {
   openPopup(popupElementModal);
-  disableSubmitButton(addSubmitButton);
-  resetValidation();
+  addCardFormValidator.resetValidation();
 });
-popupElementCloseButton.addEventListener('click', () => {
-  closePopup(popupElementModal);
-  formAddCard.reset();
-});
+popupElementCloseButton.addEventListener('click', () => closePopup(popupElementModal));
 
 //Изменение данных профиля
 formProfile.addEventListener('submit', (evt) => {

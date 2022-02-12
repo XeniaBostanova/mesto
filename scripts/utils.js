@@ -20,33 +20,33 @@ function closePopupOnEsc(evt) {
   }
 }
 
-//Функция комплексного сброса валидации инпутов
-export function resetValidation () {
-  deleteInputErrorStyle();
-  deleteActiveSpans();
-}
+// //Функция комплексного сброса валидации инпутов
+// export function resetValidation () {
+//   deleteInputErrorStyle();
+//   deleteActiveSpans();
+// }
 
-//Разбиваем объект на переменные с помощью деструктуризации
-const {inactiveButtonClass, inputErrorClass, errorClass} = selectors;
+// //Разбиваем объект на переменные с помощью деструктуризации
+// const {inactiveButtonClass, inputErrorClass, errorClass} = selectors;
 
-//Функция удаления сообщений спанов после закрытия попапов с input-error
-function deleteActiveSpans () {
-  const spansActive = document.querySelectorAll(`.${errorClass}`);
-  spansActive.forEach((errorSpanMessage) => {
-   errorSpanMessage.textContent = '';
-  });
-}
+// //Функция удаления сообщений спанов после закрытия попапов с input-error
+// function deleteActiveSpans () {
+//   const spansActive = document.querySelectorAll(`.${errorClass}`);
+//   spansActive.forEach((errorSpanMessage) => {
+//    errorSpanMessage.textContent = '';
+//   });
+// }
 
-//Функция удаления красного подчеркивания невалидных полей после закрытия попапов с input-error
-function deleteInputErrorStyle () {
-  const inputErrors = document.querySelectorAll(`.${inputErrorClass}`);
-  inputErrors.forEach((inputElement) => {
-    inputElement.classList.remove(inputErrorClass);
-  });
-}
+// //Функция удаления красного подчеркивания невалидных полей после закрытия попапов с input-error
+// function deleteInputErrorStyle () {
+//   const inputErrors = document.querySelectorAll(`.${inputErrorClass}`);
+//   inputErrors.forEach((inputElement) => {
+//     inputElement.classList.remove(inputErrorClass);
+//   });
+// }
 
-//Функция деактивации кнопки submit
-export function disableSubmitButton (submitButtonSelector) {
-  submitButtonSelector.setAttribute('disabled', true);
-  submitButtonSelector.classList.add(inactiveButtonClass);
-}
+// //Функция деактивации кнопки submit
+// export function disableSubmitButton (submitButtonSelector) {
+//   submitButtonSelector.setAttribute('disabled', true);
+//   submitButtonSelector.classList.add(inactiveButtonClass);
+// }

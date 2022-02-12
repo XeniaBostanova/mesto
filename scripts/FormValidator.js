@@ -40,6 +40,15 @@ export class FormValidator {
     });
   }
 
+  //Сброс валидации
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
+
   //Деактивируем кнопку сабмита при невалидном инпуте
   _toggleButtonState() {
     const {inactiveButtonClass} = this._config;

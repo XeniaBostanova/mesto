@@ -52,8 +52,8 @@ export const popupElementCloseButton = popupElementModal.querySelector('.popup__
 
 export const popupImageCloseButton = popupImageModal.querySelector('.popup__close');
 
-export const editSubmitButton = popupProfileModal.querySelector('.form__button_type_edit');
-export const addSubmitButton = popupElementModal.querySelector('.form__button_type_add');
+// export const editSubmitButton = popupProfileModal.querySelector('.form__button_type_edit');
+// export const addSubmitButton = popupElementModal.querySelector('.form__button_type_add');
 
 //Формы
 export const formProfile = popupProfileModal.querySelector('.form');
