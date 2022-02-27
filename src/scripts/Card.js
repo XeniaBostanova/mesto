@@ -1,11 +1,9 @@
-import { openPopup, closePopup } from './utils.js';
-import { popupImageModal, popupImageCloseButton, popupImageCaption, popupImageItem } from './constants.js';
-
-export class Card {
-  constructor(data, cardSelector) {
+export default class Card {
+  constructor(data, cardSelector, {handleCardClick}) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -28,15 +26,6 @@ export class Card {
     this._element.remove();
   }
 
-  //Открытие попапа с картинкой карточки
-  _createPopupImage() {
-    popupImageItem.src = this._link;
-    popupImageItem.alt = this._name;
-    popupImageCaption.textContent = this._name;
-
-    openPopup(popupImageModal);
-  }
-
   _setEventListeners() {
     this._elementImage = this._element.querySelector('.element__image');
     this._likeButton = this._element.querySelector('.element__like-button');
@@ -44,9 +33,9 @@ export class Card {
 
     this._likeButton.addEventListener('click', () => this._likeHandler());
     deleteButton.addEventListener('click', () => this._deleteHandler());
-    this._elementImage.addEventListener('click', () => this._createPopupImage());
-
-    popupImageCloseButton.addEventListener('click', () => closePopup(popupImageModal));
+    this._elementImage.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
+    });
   }
 
   generateCard() {
@@ -56,7 +45,7 @@ export class Card {
     const elementTitle = this._element.querySelector('.element__title');
 
     this._elementImage.src = this._link;
-    this._elementImage.alt = this._link;
+    this._elementImage.alt = this._name;
     elementTitle.textContent = this._name;
 
     return this._element;
