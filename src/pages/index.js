@@ -1,12 +1,12 @@
-import '../pages/index.css'
+import './index.css'
 import { initialCards, selectors, popupProfileOpenButton, popupElementOpenButton,
-formProfile, formAddCard, elementsList, nameInput, jobInput } from './constants.js';
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+formProfile, formAddCard, elementsList, nameInput, jobInput } from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 //Создаем экземпляр класса для каждой формы
 const profileFormValidator = new FormValidator(selectors, formProfile);
@@ -20,24 +20,17 @@ addCardFormValidator.enableValidation();
 const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
 
-//Функция создания экземпляра карточки
-function createCard(item) {
-  const card = new Card(item, '.element-template', {
-    handleCardClick: (name, link) => {
-      popupImage.open(name, link);
-    }
-  });
-  const cardElement = card.generateCard();
-
-  return cardElement;
-}
-
 //Разметка начальных карточек
 const cardsList = new Section({
   items: initialCards,
-  renderer: (cardItem) => {
-    const elemCard = createCard(cardItem);
-    cardsList.addItem(elemCard);
+  renderer: (item) => {
+    const card = new Card(item, '.element-template', {
+      handleCardClick: (name, link) => {
+        popupImage.open(name, link);
+      }
+    });
+    const cardElement = card.generateCard();
+    return cardElement;
   }
 }, elementsList);
 
@@ -46,8 +39,7 @@ cardsList.renderItems();
 //Попап добавления карточек
 const popupAddCard = new PopupWithForm('.popup_type_add', {
   handleFormSubmit: (formData) => {
-    const newCard = createCard(formData);
-    cardsList.addItem(newCard);
+    cardsList.addItem(formData);
   }
 });
 

@@ -38,7 +38,7 @@ export const selectors = {
 //Модалки
 export const popupProfileModal = document.querySelector('.popup_type_edit');
 export const popupElementModal = document.querySelector('.popup_type_add');
-export const popupImageModal = document.querySelector('.popup_type_image');
+// export const popupImageModal = document.querySelector('.popup_type_image');
 
 //Кнопки
 export const popupProfileOpenButton = document.querySelector('.profile__edit-button');
