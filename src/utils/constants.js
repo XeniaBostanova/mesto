@@ -38,17 +38,19 @@ export const selectors = {
 //Модалки
 export const popupProfileModal = document.querySelector('.popup_type_edit');
 export const popupElementModal = document.querySelector('.popup_type_add');
-// export const popupImageModal = document.querySelector('.popup_type_image');
+export const popupAvatarModal = document.querySelector('.popup_type_avatar');
 
 //Кнопки
 export const popupProfileOpenButton = document.querySelector('.profile__edit-button');
 export const popupElementOpenButton = document.querySelector('.profile__add-button');
+export const avatarImage = document.querySelector('.profile__image-button');
 
 //Формы
 export const formProfile = popupProfileModal.querySelector('.form');
 export const formAddCard = popupElementModal.querySelector('.form');
+export const formAvatar = popupAvatarModal.querySelector('.form');
 
-// //Инпуты
+// Инпуты
 export const nameInput = formProfile.querySelector('.form__item_type_name');
 export const jobInput = formProfile.querySelector('.form__item_type_about');
 
