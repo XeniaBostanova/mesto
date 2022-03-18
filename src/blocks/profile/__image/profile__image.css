@@ -5,9 +5,3 @@
   object-position: center;
   object-fit: cover;
 }
-
-@media screen and (max-width:767px) {
-  .profile__image {
-    margin: 0 auto;
-  }
-}
