@@ -11,28 +11,25 @@ import { api } from '../components/Api.js';
 
 let userId
 
-api.getProfile()
-  .then((res) => {
-    userInfo.setUserInfo(res);
-    userId = res._id;
-  })
-
-api.getInitialCards()
-  .then((elemList) => {
+Promise.all([api.getProfile(), api.getInitialCards()])
+  .then(([userData, elemList]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
     elemList.forEach((data) => {
       cardsList.addItem(data);
     });
   })
+  .catch((err) => console.log(err))
 
 //Создаем экземпляр класса для каждой формы
 const profileFormValidator = new FormValidator(selectors, formProfile);
 const addCardFormValidator = new FormValidator(selectors, formAddCard);
-// const editAvatarFormValidator = new FormValidator(selectors, formAvatar);
+const editAvatarFormValidator = new FormValidator(selectors, formAvatar);
 
 //Включаем валидацию форм
 profileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
-// editAvatarFormValidator.enableValidation();
+editAvatarFormValidator.enableValidation();
 
 //Попап с картинкой
 const popupImage = new PopupWithImage('.popup_type_image');
@@ -115,8 +112,6 @@ const popupAvatar = new PopupWithForm('.popup_type_avatar', {
     const {avatar} = data;
     api.editAvatar(avatar)
       .then((res) => {
-        console.log('avatar', avatar)//undefined
-        console.log('res', res)//undefined
         userInfo.setUserAvatar(res);
         popupAvatar.close();
       })
@@ -127,7 +122,7 @@ const popupAvatar = new PopupWithForm('.popup_type_avatar', {
 
 avatarImage.addEventListener('click', () => {
   popupAvatar.open();
-  // editAvatarFormValidator.resetValidation();
+  editAvatarFormValidator.resetValidation();
 })
 
 popupAvatar.setEventListeners();
