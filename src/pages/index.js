@@ -50,6 +50,7 @@ const cardsList = new Section({
             .then(() => {
               card.deleteAddedCard();
               popupDeleteCard.close();
+              popupDeleteCard.setEventListeners();
             })
             .catch((err) => console.log(err))
         })
@@ -85,10 +86,10 @@ const popupAddCard = new PopupWithForm('.popup_type_add', {
     api.addCard(name, link)
       .then((res) => {
         cardsList.addItem(res);
+        popupAddCard.close();
       })
       .catch((err) => console.log(err))
       .finally(() => popupAddCard.renderLoading(false))
-    popupAddCard.close();
   }
 });
 
@@ -101,6 +102,7 @@ popupAddCard.setEventListeners();
 //Попап удаления карточки
 const popupDeleteCard = new PopupWithForm('.popup_type_delete', {});
 popupDeleteCard.setEventListeners();
+
 
 const userInfo = new UserInfo({
   name: '.profile__title',
