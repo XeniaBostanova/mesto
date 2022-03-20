@@ -2,6 +2,10 @@ export default class FormValidator {
   constructor(config, form) {
     this._config = config;
     this._form = form;
+
+    const {inputSelector, submitButtonSelector} = this._config;
+    this._inputList = Array.from(this._form.querySelectorAll(inputSelector));
+    this._buttonElement = this._form.querySelector(submitButtonSelector);
   }
 
   //Показываем браузерный текст ошибки из спана и подчеркиваем невалидное поле
@@ -64,10 +68,6 @@ export default class FormValidator {
 
   //Обработчик событий input для всех полей формы
   _setEventListeners() {
-    const {inputSelector, submitButtonSelector} = this._config
-
-    this._inputList = Array.from(this._form.querySelectorAll(inputSelector));
-    this._buttonElement = this._form.querySelector(submitButtonSelector);
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {

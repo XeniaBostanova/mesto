@@ -15,7 +15,7 @@ Promise.all([api.getProfile(), api.getInitialCards()])
   .then(([userData, elemList]) => {
     userId = userData._id;
     userInfo.setUserInfo(userData);
-    elemList.forEach((data) => {
+    elemList.reverse().forEach((data) => {
       cardsList.addItem(data);
     });
   })
@@ -51,6 +51,7 @@ const cardsList = new Section({
               card.deleteAddedCard();
               popupDeleteCard.close();
             })
+            .catch((err) => console.log(err))
         })
       },
       handleLikeClick: (id) => {
@@ -59,11 +60,13 @@ const cardsList = new Section({
           .then((res) => {
             card.setLikes(res.likes);
           })
+          .catch((err) => console.log(err))
         } else {
           api.addLike(id)
           .then((res) => {
             card.setLikes(res.likes);
           })
+          .catch((err) => console.log(err))
         }
       }
     }, userId);

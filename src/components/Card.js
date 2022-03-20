@@ -27,6 +27,7 @@ export default class Card {
   //Удаление карточки
   deleteAddedCard() {
     this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
